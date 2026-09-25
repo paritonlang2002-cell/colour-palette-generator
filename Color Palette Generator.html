@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Generator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: #111827;
+            transition: background 0.4s ease;
+            padding: 20px;
+        }
+
+        .container {
+            width: min(90%, 420px);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        h1 {
+            color: #111827;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        p {
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+        .color-box {
+            width: 100%;
+            height: 180px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            background: #4f46e5;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.12);
+            transition: background 0.4s ease;
+        }
+
+        .color-code {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            flex: 1;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        #generate {
+            background: #111827;
+            color: white;
+        }
+
+        #copy {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        #message {
+            height: 20px;
+            margin-top: 15px;
+            color: #16a34a;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .color-code {
+                font-size: 24px;
+            }
+
+            .color-box {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Color Palette Generator</h1>
+        <p>Generate a random color and discover your next favorite shade.</p>
+
+        <div class="color-box" id="colorBox"></div>
+
+        <div class="color-code" id="colorCode">#4F46E5</div>
+
+        <div class="buttons">
+            <button id="generate">Generate Color</button>
+            <button id="copy">Copy HEX</button>
+        </div>
+
+        <div id="message"></div>
+    </div>
+
+    <script>
+        const colorBox = document.getElementById("colorBox");
+        const colorCode = document.getElementById("colorCode");
+        const generateButton = document.getElementById("generate");
+        const copyButton = document.getElementById("copy");
+        const message = document.getElementById("message");
+
+        function generateColor() {
+            const characters = "0123456789ABCDEF";
+            let color = "#";
+
+            for (let i = 0; i < 6; i++) {
+                color += characters[Math.floor(Math.random() * 16)];
+            }
+
+            colorBox.style.backgroundColor = color;
+            document.body.style.backgroundColor = color;
+            colorCode.textContent = color;
+
+            message.textContent = "";
+        }
+
+        generateButton.addEventListener("click", generateColor);
+
+        copyButton.addEventListener("click", async () => {
+            await navigator.clipboard.writeText(colorCode.textContent);
+            message.textContent = "Color copied!";
+        });
+    </script>
+</body>
+</html>
+
